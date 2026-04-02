@@ -1,29 +1,17 @@
 async function addCustomer() {
-  const name = document.getElementById("name").value;
-  const phone = document.getElementById("phone").value;
-  const addr = document.getElementById("addr").value;
-
-  if (!name) {
-    alert("Enter name!");
-    return;
-  }
-
   await fetch("/customer", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, phone, address: addr })
+    body: JSON.stringify({
+      name: document.getElementById("name").value,
+      phone: document.getElementById("phone").value,
+      address: document.getElementById("addr").value
+    })
   });
-
-  document.getElementById("name").value = "";
-  document.getElementById("phone").value = "";
-  document.getElementById("addr").value = "";
-
   load();
 }
 
 async function load() {
-  document.getElementById("list").innerHTML = "Loading...";
-
   const res = await fetch("/customers");
   const data = await res.json();
 
@@ -33,30 +21,41 @@ async function load() {
     c.name && c.name.toLowerCase().includes(search)
   );
 
-  // 🔥 TOTAL CALCULATION
   let total = 0;
   filtered.forEach(c => total += c.total_outstanding);
   document.getElementById("total").innerText = total;
 
-  // 🔥 LIST
   document.getElementById("list").innerHTML = filtered.map(c => `
     <div class="card">
       <b>${c.name}</b> (${c.phone})<br>
-      <span class="${c.total_outstanding > 0 ? 'high' : 'zero'}">
-        ₹${c.total_outstanding}
-      </span>
-      <br>
-      ${c.total_outstanding > 0 ? '🔴 DUE' : '🟢 CLEAR'}
+      ₹${c.total_outstanding}
     </div>
   `).join("");
 
-  // DROPDOWN
-  document.getElementById("cid").innerHTML = data.map(c => `
-    <option value="${c._id}">${c.name}</option>
-  `).join("");
+  document.getElementById("cid").innerHTML = data.map(c =>
+    `<option value="${c._id}">${c.name}</option>`
+  ).join("");
 
   document.getElementById("rid").innerHTML =
     document.getElementById("cid").innerHTML;
+
+  loadHistory();
+}
+
+async function loadHistory() {
+  const cRes = await fetch("/credits");
+  const credits = await cRes.json();
+
+  document.getElementById("creditList").innerHTML = credits.map(c => `
+    <div class="card">₹${c.amount} - ${c.items}</div>
+  `).join("");
+
+  const rRes = await fetch("/repayments");
+  const repays = await rRes.json();
+
+  document.getElementById("repayList").innerHTML = repays.map(r => `
+    <div class="card">₹${r.amount} repaid</div>
+  `).join("");
 }
 
 async function addCredit() {
@@ -70,10 +69,6 @@ async function addCredit() {
       date: new Date()
     })
   });
-
-  document.getElementById("amt").value = "";
-  document.getElementById("item").value = "";
-
   load();
 }
 
@@ -87,9 +82,6 @@ async function repay() {
       date: new Date()
     })
   });
-
-  document.getElementById("ramt").value = "";
-
   load();
 }
 

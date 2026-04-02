@@ -10,14 +10,9 @@
 
 <h1>🧾 Kirana Credit System</h1>
 
-<div class="card">
-  <h2>💼 Kirana Dashboard</h2>
-  <p>Manage credits & repayments easily</p>
-</div>
+<input id="search" placeholder="🔍 Search..." oninput="load()">
 
 <h2>Total Outstanding: ₹<span id="total">0</span></h2>
-
-<input id="search" placeholder="🔍 Search Customer..." oninput="load()">
 
 <h2>Add Customer</h2>
 <input id="name" placeholder="Name">
@@ -26,7 +21,7 @@
 <button onclick="addCustomer()">Add</button>
 
 <h2>Customers</h2>
-<div id="list">Loading...</div>
+<div id="list"></div>
 
 <h2>Add Credit</h2>
 <select id="cid"></select>
@@ -38,6 +33,12 @@
 <select id="rid"></select>
 <input id="ramt" placeholder="Amount">
 <button onclick="repay()">Repay</button>
+
+<h2>📋 Credit History</h2>
+<div id="creditList"></div>
+
+<h2>💸 Repayment History</h2>
+<div id="repayList"></div>
 
 </div>
 
