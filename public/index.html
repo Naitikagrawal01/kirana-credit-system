@@ -2,68 +2,63 @@
 <html>
 <head>
   <title>Kirana Dashboard</title>
-
-  <!-- 🔥 MOBILE RESPONSIVE -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<script>
+if(localStorage.getItem("auth") !== "true"){
+  window.location.href = "/login.html";
+}
+</script>
+
 <div class="container">
 
 <h1>🧾 Kirana Dashboard</h1>
+<button onclick="logout()">Logout</button>
 
-<!-- 🔍 SEARCH -->
-<input id="search" placeholder="🔍 Search customer..." oninput="load()">
+<input id="search" placeholder="🔍 Search..." oninput="load()">
 
-<!-- 💰 TOTAL -->
 <h2>Total Outstanding: ₹<span id="total">0</span></h2>
 
-<!-- ➕ ADD CUSTOMER -->
 <h2>Add Customer</h2>
-<input id="name" placeholder="Name">
-<input id="phone" placeholder="Phone">
-<input id="addr" placeholder="Address">
+<input id="name"><input id="phone"><input id="addr">
 <button onclick="addCustomer()">Add</button>
 
-<!-- ➕ CREDIT -->
 <h2>Add Credit</h2>
 <select id="cid"></select>
-<input id="amt" placeholder="Amount">
-<input id="item" placeholder="Items">
+<input id="amt"><input id="item">
 <button onclick="addCredit()">Add Credit</button>
 
-<!-- ➖ REPAY -->
 <h2>Repayment</h2>
 <select id="rid"></select>
-<input id="ramt" placeholder="Amount">
+<input id="ramt">
 <button onclick="repay()">Repay</button>
 
-<!-- 🔥 DASHBOARD GRID -->
+<h2>📊 Analytics</h2>
+<canvas id="chart"></canvas>
+
 <div class="grid">
 
-  <!-- 👥 LEFT -->
-  <div>
-    <h2>👥 Customers</h2>
-    <div id="list"></div>
-  </div>
+<div>
+<h2>Customers</h2>
+<div id="list"></div>
+</div>
 
-  <!-- 📊 RIGHT -->
-  <div>
+<div>
+<h2>Credits</h2>
+<div id="creditList"></div>
 
-    <h2>📋 Credit History</h2>
-    <div id="creditList"></div>
-
-    <h2>💸 Repayment History</h2>
-    <div id="repayList"></div>
-
-  </div>
+<h2>Repayments</h2>
+<div id="repayList"></div>
+</div>
 
 </div>
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="script.js"></script>
 
 </body>
