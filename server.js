@@ -1,18 +1,20 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
-// 🔥 FIREBASE FAIL HUA TOH LOCAL USE KAR
+// 🔥 ATLAS CONNECTION
 mongoose.connect("mongodb+srv://webx:1234@cluster0.pt8c1mc.mongodb.net/kirana?retryWrites=true&w=majority")
 .then(() => console.log("MongoDB Connected ✅"))
 .catch(err => console.log(err));
 
-// SCHEMAS
+// 📦 SCHEMAS
 const Customer = mongoose.model("Customer", {
   name: String,
   phone: String,
@@ -33,13 +35,26 @@ const Repayment = mongoose.model("Repayment", {
   date: String
 });
 
-// ADD CUSTOMER
+// ➕ ADD CUSTOMER
 app.post("/customer", async (req, res) => {
-  const data = await Customer.create(req.body);
+  const { name, phone, address } = req.body;
+
+  const data = await Customer.create({
+    name,
+    phone,
+    address
+  });
+
   res.send(data);
 });
 
-// ADD CREDIT
+// 📥 GET CUSTOMERS
+app.get("/customers", async (req, res) => {
+  const data = await Customer.find();
+  res.send(data);
+});
+
+// ➕ ADD CREDIT
 app.post("/credit", async (req, res) => {
   const { customer_id, amount } = req.body;
 
@@ -52,7 +67,7 @@ app.post("/credit", async (req, res) => {
   res.send("Credit Added");
 });
 
-// ADD REPAYMENT
+// ➖ REPAYMENT
 app.post("/repay", async (req, res) => {
   const { customer_id, amount } = req.body;
 
@@ -65,10 +80,14 @@ app.post("/repay", async (req, res) => {
   res.send("Repayment Done");
 });
 
-// GET CUSTOMERS
-app.get("/customers", async (req, res) => {
-  const data = await Customer.find();
-  res.send(data);
+// 🔥 HOMEPAGE FIX
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-app.listen(3000, () => console.log("Server running 🚀"));
+// 🔥 PORT FIX (RENDER)
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
+});
