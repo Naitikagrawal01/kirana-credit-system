@@ -2,6 +2,10 @@
 <html>
 <head>
   <title>Kirana Dashboard</title>
+
+  <!-- 🔥 MOBILE RESPONSIVE -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -10,42 +14,50 @@
 
 <h1>🧾 Kirana Dashboard</h1>
 
-<input id="search" placeholder="🔍 Search..." oninput="load()">
+<!-- 🔍 SEARCH -->
+<input id="search" placeholder="🔍 Search customer..." oninput="load()">
 
+<!-- 💰 TOTAL -->
 <h2>Total Outstanding: ₹<span id="total">0</span></h2>
 
+<!-- ➕ ADD CUSTOMER -->
 <h2>Add Customer</h2>
 <input id="name" placeholder="Name">
 <input id="phone" placeholder="Phone">
 <input id="addr" placeholder="Address">
 <button onclick="addCustomer()">Add</button>
 
+<!-- ➕ CREDIT -->
 <h2>Add Credit</h2>
 <select id="cid"></select>
 <input id="amt" placeholder="Amount">
 <input id="item" placeholder="Items">
 <button onclick="addCredit()">Add Credit</button>
 
+<!-- ➖ REPAY -->
 <h2>Repayment</h2>
 <select id="rid"></select>
 <input id="ramt" placeholder="Amount">
 <button onclick="repay()">Repay</button>
 
+<!-- 🔥 DASHBOARD GRID -->
 <div class="grid">
 
-  <!-- LEFT -->
+  <!-- 👥 LEFT -->
   <div>
     <h2>👥 Customers</h2>
     <div id="list"></div>
   </div>
 
-  <!-- RIGHT -->
+  <!-- 📊 RIGHT -->
   <div>
+
     <h2>📋 Credit History</h2>
     <div id="creditList"></div>
 
     <h2>💸 Repayment History</h2>
     <div id="repayList"></div>
+
   </div>
 
 </div>
@@ -53,5 +65,6 @@
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>

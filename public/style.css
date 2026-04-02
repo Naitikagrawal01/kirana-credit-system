@@ -1,45 +1,72 @@
 body {
-  font-family: Arial;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(135deg, #0f172a, #1e293b);
   color: white;
-  margin: 0;
 }
 
 .container {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: auto;
-  padding: 20px;
+  padding: 15px;
 }
 
-input, select, button {
+h1 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+h2 {
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+input, select {
   width: 100%;
-  margin: 5px 0;
   padding: 10px;
-  border-radius: 8px;
+  margin: 5px 0;
+  border-radius: 10px;
   border: none;
 }
 
 button {
-  background: #22c55e;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(45deg, #22c55e, #16a34a);
   color: white;
-  cursor: pointer;
+  font-weight: bold;
 }
 
 .card {
-  background: #1e293b;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 12px;
 }
 
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: 15px;
 }
 
 @media(max-width:768px){
   .grid {
     grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+
+  input, select, button {
+    font-size: 14px;
   }
 }
