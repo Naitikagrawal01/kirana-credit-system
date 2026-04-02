@@ -2,69 +2,73 @@
 <html>
 <head>
   <title>Kirana Dashboard</title>
-
-  <!-- 🔥 MOBILE RESPONSIVE -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+
+<script>
+if(localStorage.getItem("auth")!=="true"){ window.location.href="/login.html"; }
+</script>
 
 <div class="container">
 
 <h1>🧾 Kirana Dashboard</h1>
+<button onclick="logout()">Logout</button>
 
-<!-- 🔍 SEARCH -->
-<input id="search" placeholder="🔍 Search customer..." oninput="load()">
+<div class="top-grid">
 
-<!-- 💰 TOTAL -->
-<h2>Total Outstanding: ₹<span id="total">0</span></h2>
-
-<!-- ➕ ADD CUSTOMER -->
-<h2>Add Customer</h2>
+<div class="card">
+<h3>Add Customer</h3>
 <input id="name" placeholder="Name">
 <input id="phone" placeholder="Phone">
 <input id="addr" placeholder="Address">
 <button onclick="addCustomer()">Add</button>
+</div>
 
-<!-- ➕ CREDIT -->
-<h2>Add Credit</h2>
+<div class="card">
+<h3>Add Credit</h3>
 <select id="cid"></select>
 <input id="amt" placeholder="Amount">
 <input id="item" placeholder="Items">
 <button onclick="addCredit()">Add Credit</button>
+</div>
 
-<!-- ➖ REPAY -->
-<h2>Repayment</h2>
+<div class="card">
+<h3>Repayment</h3>
 <select id="rid"></select>
 <input id="ramt" placeholder="Amount">
 <button onclick="repay()">Repay</button>
-
-<!-- 🔥 DASHBOARD GRID -->
-<div class="grid">
-
-  <!-- 👥 LEFT -->
-  <div>
-    <h2>👥 Customers</h2>
-    <div id="list"></div>
-  </div>
-
-  <!-- 📊 RIGHT -->
-  <div>
-
-    <h2>📋 Credit History</h2>
-    <div id="creditList"></div>
-
-    <h2>💸 Repayment History</h2>
-    <div id="repayList"></div>
-
-  </div>
+</div>
 
 </div>
+
+<input id="search" placeholder="🔍 Search..." oninput="load()">
+<h2>Total Outstanding: ₹<span id="total">0</span></h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>👥 Customers</h3>
+<div id="list"></div>
+</div>
+
+<div class="card">
+<h3>📋 Credit History</h3>
+<div id="creditList"></div>
+
+<h3>💸 Repayment History</h3>
+<div id="repayList"></div>
+</div>
+
+</div>
+
+<h2>📊 Outstanding Chart</h2>
+<canvas id="chart"></canvas>
 
 </div>
 
 <script src="script.js"></script>
-
 </body>
 </html>
