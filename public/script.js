@@ -27,7 +27,7 @@ async function load() {
 
   document.getElementById("list").innerHTML = filtered.map(c => `
     <div class="card">
-      <b>${c.name}</b> (${c.phone})<br>
+      <b>${c.name}</b><br>
       ₹${c.total_outstanding}
     </div>
   `).join("");

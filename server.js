@@ -74,7 +74,7 @@ app.post("/repay", async (req, res) => {
   res.send("Repayment Done");
 });
 
-// 🔥 NEW APIs
+// HISTORY APIs
 app.get("/credits", async (req, res) => {
   const data = await Credit.find();
   res.send(data);
@@ -90,6 +90,6 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// PORT (DON'T TOUCH)
+// PORT
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log("Server running " + PORT));
