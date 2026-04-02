@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // 🔥 FIREBASE FAIL HUA TOH LOCAL USE KAR
-mongoose.connect("mongodb://127.0.0.1:27017/kirana")
+mongoose.connect("mongodb+srv://webx:1234@cluster0.pt8c1mc.mongodb.net/kirana?retryWrites=true&w=majority")
 .then(() => console.log("MongoDB Connected ✅"))
 .catch(err => console.log(err));
 
