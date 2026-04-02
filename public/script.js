@@ -1,48 +1,72 @@
-function logout(){localStorage.removeItem("auth");window.location.href="/login.html"}
-
-async function addCustomer(){
-  await fetch("/customer",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:name.value,phone:phone.value,address:addr.value})});
-  load(); // <-- ensure list updates
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: white;
 }
 
-async function load(){
-  const data=await (await fetch("/customers")).json();
-  const search=document.getElementById("search").value.toLowerCase();
-  const filtered=data.filter(c=>c.name.toLowerCase().includes(search));
-
-  // Total Outstanding
-  let total=0;
-  filtered.forEach(c=>total+=c.total_outstanding);
-  document.getElementById("total").innerText=total;
-
-  // Customers list
-  document.getElementById("list").innerHTML=filtered.map(c=>`<div class="card"><b>${c.name}</b><br>₹${c.total_outstanding}</div>`).join("");
-
-  // Dropdowns
-  const options = data.map(c=>`<option value="${c._id}">${c.name}</option>`).join("");
-  document.getElementById("cid").innerHTML=options;
-  document.getElementById("rid").innerHTML=options;
-
-  // History
-  loadHistory();
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 15px;
 }
 
-async function loadHistory(){
-  const credits=await(await fetch("/credits")).json();
-  creditList.innerHTML=credits.map(c=>`<div class="card">₹${c.amount}-${c.items}</div>`).join("");
-
-  const repays=await(await fetch("/repayments")).json();
-  repayList.innerHTML=repays.map(r=>`<div class="card">₹${r.amount} repaid</div>`).join("");
+h1 {
+  text-align: center;
+  margin-bottom: 15px;
 }
 
-async function addCredit(){
-  await fetch("/credit",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({customer_id:cid.value,amount:Number(amt.value),items:item.value,date:new Date()})});
-  load();
+h2 {
+  margin-top: 20px;
+  font-size: 18px;
 }
 
-async function repay(){
-  await fetch("/repay",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({customer_id:rid.value,amount:Number(ramt.value),date:new Date()})});
-  load();
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 10px;
+  border: none;
 }
 
-load();
+button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(45deg, #22c55e, #16a34a);
+  color: white;
+  font-weight: bold;
+}
+
+.card {
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+@media(max-width:768px){
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  h2 {
+    font-size: 16px;
+  }
+
+  input, select, button {
+    font-size: 14px;
+  }
+}
