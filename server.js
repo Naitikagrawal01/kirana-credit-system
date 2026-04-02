@@ -13,9 +13,25 @@ mongoose.connect("mongodb+srv://webx:1234@cluster0.pt8c1mc.mongodb.net/kirana?re
 .catch(err=>console.log(err));
 
 // Schemas
-const Customer = mongoose.model("Customer", { name:String, phone:String, address:String, total_outstanding:{type:Number, default:0}});
-const Credit = mongoose.model("Credit",{ customer_id:String, amount:Number, items:String, date:String});
-const Repayment = mongoose.model("Repayment",{ customer_id:String, amount:Number, date:String});
+const Customer = mongoose.model("Customer", {
+  name:String,
+  phone:String,
+  address:String,
+  total_outstanding:{type:Number, default:0}
+});
+
+const Credit = mongoose.model("Credit",{
+  customer_id:{type: mongoose.Schema.Types.ObjectId, ref:"Customer"},
+  amount:Number,
+  items:String,
+  date:{type:Date, default:Date.now}
+});
+
+const Repayment = mongoose.model("Repayment",{
+  customer_id:{type: mongoose.Schema.Types.ObjectId, ref:"Customer"},
+  amount:Number,
+  date:{type:Date, default:Date.now}
+});
 
 // Routes
 app.post("/customer", async(req,res)=>{
@@ -29,6 +45,7 @@ app.get("/customers", async(req,res)=>{ res.send(await Customer.find()); });
 app.post("/credit", async(req,res)=>{
   await Credit.create(req.body);
   const cust = await Customer.findById(req.body.customer_id);
+  if(!cust) return res.status(404).send("Customer not found");
   cust.total_outstanding += req.body.amount;
   await cust.save();
   res.send("Credit Added");
@@ -37,6 +54,7 @@ app.post("/credit", async(req,res)=>{
 app.post("/repay", async(req,res)=>{
   await Repayment.create(req.body);
   const cust = await Customer.findById(req.body.customer_id);
+  if(!cust) return res.status(404).send("Customer not found");
   cust.total_outstanding -= req.body.amount;
   await cust.save();
   res.send("Repayment Done");
