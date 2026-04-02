@@ -7,59 +7,65 @@
 </head>
 <body>
 
-<script>
-if(localStorage.getItem("auth") !== "true"){
-  window.location.href = "/login.html";
-}
-</script>
-
 <div class="container">
 
 <h1>🧾 Kirana Dashboard</h1>
-<button onclick="logout()">Logout</button>
+
+<div class="top-grid">
+
+  <!-- Add Customer Card -->
+  <div class="card">
+    <h3>Add Customer</h3>
+    <input id="name" placeholder="Name">
+    <input id="phone" placeholder="Phone">
+    <input id="addr" placeholder="Address">
+    <button onclick="addCustomer()">Add</button>
+  </div>
+
+  <!-- Add Credit Card -->
+  <div class="card">
+    <h3>Add Credit</h3>
+    <select id="cid"></select>
+    <input id="amt" placeholder="Amount">
+    <input id="item" placeholder="Items">
+    <button onclick="addCredit()">Add Credit</button>
+  </div>
+
+  <!-- Repayment Card -->
+  <div class="card">
+    <h3>Repayment</h3>
+    <select id="rid"></select>
+    <input id="ramt" placeholder="Amount">
+    <button onclick="repay()">Repay</button>
+  </div>
+
+</div>
 
 <input id="search" placeholder="🔍 Search..." oninput="load()">
 
 <h2>Total Outstanding: ₹<span id="total">0</span></h2>
 
-<h2>Add Customer</h2>
-<input id="name"><input id="phone"><input id="addr">
-<button onclick="addCustomer()">Add</button>
-
-<h2>Add Credit</h2>
-<select id="cid"></select>
-<input id="amt"><input id="item">
-<button onclick="addCredit()">Add Credit</button>
-
-<h2>Repayment</h2>
-<select id="rid"></select>
-<input id="ramt">
-<button onclick="repay()">Repay</button>
-
-<h2>📊 Analytics</h2>
-<canvas id="chart"></canvas>
-
 <div class="grid">
 
-<div>
-<h2>Customers</h2>
-<div id="list"></div>
+  <!-- Customers Card -->
+  <div class="card">
+    <h3>👥 Customers</h3>
+    <div id="list"></div>
+  </div>
+
+  <!-- Credit + Repayment History -->
+  <div class="card">
+    <h3>📋 Credit History</h3>
+    <div id="creditList"></div>
+
+    <h3>💸 Repayment History</h3>
+    <div id="repayList"></div>
+  </div>
+
 </div>
 
-<div>
-<h2>Credits</h2>
-<div id="creditList"></div>
-
-<h2>Repayments</h2>
-<div id="repayList"></div>
 </div>
 
-</div>
-
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="script.js"></script>
-
 </body>
 </html>
