@@ -46,12 +46,11 @@ app.post("/repay", async(req,res)=>{
 app.get("/credits", async(req,res)=>{ res.send(await Credit.find()); });
 app.get("/repayments", async(req,res)=>{ res.send(await Repayment.find()); });
 
-// Login page route fix
+// Login page route
 app.get("/login.html",(req,res)=>{ res.sendFile(path.join(__dirname,"public","login.html")); });
 
 // Homepage
 app.get("/",(req,res)=>{ res.sendFile(path.join(__dirname,"public","index.html")); });
 
-// PORT
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, ()=>console.log("Server running "+PORT));
