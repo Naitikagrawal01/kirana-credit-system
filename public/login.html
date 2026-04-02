@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body style="display:flex;justify-content:center;align-items:center;height:100vh;background:#0f172a;color:white;font-family:Arial;">
+
+<div>
+<h2>Login</h2>
+<input id="user" placeholder="Username">
+<input id="pass" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+</div>
+
+<script>
+function login(){
+  if(user.value==="admin" && pass.value==="1234"){
+    localStorage.setItem("auth","true");
+    window.location.href="/";
+  } else {
+    alert("Wrong credentials");
+  }
+}
+</script>
+
+</body>
+</html>
